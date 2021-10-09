@@ -1,7 +1,25 @@
 (ns news-project.core
-  (:gen-class))
+  (:require [ring.adapter.jetty :as jetty]
+            [compojure.core :refer [defroutes GET ANY]]
+            [compojure.route :refer [not-found resources]]
+            [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.resource :as resource]
+            [clojure.java.io :as io]))
+
+(defroutes routes
+
+  (GET "/" []
+    (io/resource "index.html"))
+
+  (GET "/ee" []
+    (io/resource "index.html"))
+  )
+   
+   
+(def handler (-> #'routes
+                (resource/wrap-resource "/public")
+                wrap-params))
 
 (defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
+  []
+  (jetty/run-jetty #'handler {:port 8080}))
