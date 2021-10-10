@@ -4,19 +4,18 @@
             [compojure.route :refer [not-found resources]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.resource :as resource]
+            [news-project.core.dao.db :as db]
+            [news-project.core.route.user :as route-user]
             [clojure.java.io :as io]))
 
-(defroutes routes
+(defn log-middleware
+  [handler]
+  (fn [request]
+    (println "Request path: " (:uri request))
+    (handler request)))
 
-  (GET "/" []
-    (io/resource "index.html"))
-
-  (GET "/ee" []
-    (io/resource "index.html"))
-  )
-   
-   
-(def handler (-> #'routes
+(def handler (-> #'route-user/route
+                log-middleware
                 (resource/wrap-resource "/public")
                 wrap-params))
 
