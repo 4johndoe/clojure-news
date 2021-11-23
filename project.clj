@@ -6,9 +6,10 @@
   :dependencies   [[org.clojure/clojure "1.10.3"]
                    [org.clojure/data.json "2.4.0"]
                    [com.novemberain/monger "3.5.0"]
+                   [liberator "0.14.1"]
                    [ring "1.9.4"]
                    [compojure "1.6.2"]]
-  :main news-project.core
+  :main clj.core
 
-  :ring {:handler news-project.core/handler}
+  :ring {:handler clj.core/handler}
   )
