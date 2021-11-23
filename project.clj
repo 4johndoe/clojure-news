@@ -11,5 +11,4 @@
                    [compojure "1.6.2"]]
   :main clj.core
 
-  :ring {:handler clj.core/handler}
-  )
+  :ring {:handler clj.core/handler})
